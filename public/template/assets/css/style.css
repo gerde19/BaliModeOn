@@ -77,13 +77,13 @@ a:not(.btn-social-icon):not(.btn-social):not(.page-link) .fab {
   margin-left: 4px; }
 
 .bg-primary {
-  background-color: #008500 !important; }
+  background-color: #5900ff !important; }
 
 .bg-secondary {
   background-color: #cdd3d8 !important; }
 
 .bg-success {
-  background-color: #47c363 !important; }
+  background-color: #008500 !important; }
 
 .bg-info {
   background-color: #3abaf4 !important; }
@@ -101,7 +101,7 @@ a:not(.btn-social-icon):not(.btn-social):not(.page-link) .fab {
   background-color: #191d21 !important; }
 
 .text-primary, .text-primary-all *, .text-primary-all *:before, .text-primary-all *:after {
-  color: #008500 !important; }
+  color: #5900ff !important; }
 
 .text-secondary, .text-secondary-all *, .text-secondary-all *:before, .text-secondary-all *:after {
   color: #cdd3d8 !important; }
@@ -1316,8 +1316,8 @@ h6 .badge {
 
 .btn-primary, .btn-primary.disabled {
   box-shadow: 0 2px 6px #acb5f6;
-  background-color: #008500;
-  border-color: #008500; }
+  background-color: #465cff;
+  border-color: #465cff; }
   .btn-primary:focus, .btn-primary.disabled:focus {
     background-color: #394eea !important; }
     .btn-primary:focus:active, .btn-primary.disabled:focus:active {
@@ -1326,10 +1326,10 @@ h6 .badge {
     background-color: #394eea !important; }
 
 .btn-outline-primary, .btn-outline-primary.disabled {
-  border-color: #008500;
-  color: #008500; }
+  border-color: #465cff;
+  color: #465cff; }
   .btn-outline-primary:hover, .btn-outline-primary:focus, .btn-outline-primary:active, .btn-outline-primary.disabled:hover, .btn-outline-primary.disabled:focus, .btn-outline-primary.disabled:active {
-    background-color: #008500 !important;
+    background-color: #465cff !important;
     color: #fff; }
 
 .btn-outline-white, .btn-outline-white.disabled {
@@ -1337,7 +1337,7 @@ h6 .badge {
   color: #fff; }
   .btn-outline-white:hover, .btn-outline-white:focus, .btn-outline-white:active, .btn-outline-white.disabled:hover, .btn-outline-white.disabled:focus, .btn-outline-white.disabled:active {
     background-color: #fff;
-    color: #008500; }
+    color: #465cff; }
 
 .btn-round {
   border-radius: 30px;

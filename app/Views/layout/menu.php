@@ -1,5 +1,5 @@
 <li class="menu-header">Dashboard</li>
-<li><a href="<?= site_url() ?>" class="nav-link"><i class="fas fa-fire"></i><span>Dashboard</span></a></li>
+<li><a href="<?= site_url('home') ?>" class="nav-link"><i class="fas fa-fire"></i><span>Dashboard</span></a></li>
 <?php
 if (session()->get('user_level') == "admin") {
 ?>
@@ -8,6 +8,7 @@ if (session()->get('user_level') == "admin") {
         <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-columns"></i> <span>Kode</span></a>
         <ul class="dropdown-menu">
             <li><a class="nav-link" href="<?= site_url('kodeKapal') ?>">Kapal</a></li>
+            <li><a class="nav-link" href="<?= site_url('tujuanKapal') ?>">Tujuan Kapal</a></li>
             <li><a class="nav-link" href="<?= site_url('kodeMobil') ?>">Mobil</a></li>
             <li><a class="nav-link" href="<?= site_url('kodeKamar') ?>">Kamar</a></li>
         </ul>

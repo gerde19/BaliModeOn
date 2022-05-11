@@ -1,8 +1,9 @@
-/**
- *
- * You can write your CSS code here, DO NOT touch the default JavaScript file
- * because it will make it harder for you to update.
- * 
- */
+.btn-color {
+    background-color: #008500 !important;
+    color: aliceblue;
+}
 
-/*# sourceMappingURL=custom.css.map */
+.btn-color:hover {
+    background-color: #008500;
+    color:aliceblue;
+}

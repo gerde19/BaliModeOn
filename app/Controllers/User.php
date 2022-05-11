@@ -16,4 +16,9 @@ class User extends BaseController
         ];
         return view('user/index', $data);
     }
+
+    public function booking()
+    {
+        return view('user/booking/index');
+    }
 }

@@ -10,6 +10,8 @@ class UserData extends Model
     {
         return $this->db->table('detail_kapal')
             ->join('kode_kapal', 'kode_kapal.kk_id=detail_kapal.dk_kode')
+            ->orderBy('dk_id', 'DESC')
+            ->limit(3)
             ->get()->getResultArray();
     }
 }

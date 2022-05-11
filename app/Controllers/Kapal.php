@@ -5,6 +5,7 @@ namespace App\Controllers;
 use App\Models\TabelData;
 use CodeIgniter\Validation\Rules;
 use DateTime;
+use SebastianBergmann\Diff\Diff;
 
 class Kapal extends BaseController
 {
@@ -13,6 +14,95 @@ class Kapal extends BaseController
     public function __construct()
     {
         helper('form');
+        // $this->load->model('tabeldata');
+    }
+
+    // Tujuan Kapal
+    public function tujuanKapal()
+    {
+        $model = new TabelData();
+        $ambilKode = $model->kodeTujuanKapal();
+        $nourut = substr($ambilKode, 3, 4);
+        $newKode = $nourut + 1;
+        $data = [
+            'kodeTujuanKapal' => $newKode,
+            'tujuanKapal' => $model->getTujuanKapal()
+        ];
+        return view('bmo/tujuanKapal/index', $data);
+    }
+
+    public function tujuanKapalAdd()
+    {
+        if (session()->get('user_level') <> "admin") {
+            return redirect()->to(site_url('home'));
+        } else {
+            $data = [
+                'tk_kode' => $this->request->getPost('tk_kode'),
+                'tk_tujuan' => $this->request->getPost('tk_tujuan'),
+                'tk_jam' => $this->request->getPost('tk_jam')
+            ];
+            $this->db->table('tujuan_kapal')->insert($data);
+            return redirect()->to(site_url('tujuanKapal'))->with('success', 'Data Berhasil Disimpan!');
+        }
+    }
+
+    public function tujuanKapalEdit()
+    {
+        if (session()->get('user_level') <> "admin") {
+            return redirect()->to(site_url('home'));
+        } else {
+            $id = $this->request->getPost('tk_id');
+            $default = strtotime("08:00:00"); #benar
+            $jam = $this->request->getPost('tk_jam');
+            // $res = $default - $jam;
+            // $jam1 = date("H:i:s", strtotime($default));
+            // $hasil = strtotime($jam) + strtotime($jam1);
+            $data = [
+                'tk_kode' => $this->request->getPost('tk_kode'),
+                'tk_tujuan' => $this->request->getPost('tk_tujuan'),
+                'tk_jam' => $this->request->getPost('tk_jam'),
+            ];
+            echo $default;
+            echo "<br>";
+            $jadijam = strtotime($jam);
+            echo "<br>";
+            $currentDateTime = date('Y-m-d H:i:s');
+            echo $currentDateTime;
+            echo "<br>";
+            $res = $default + $jadijam;
+            echo "<br>";
+            date_default_timezone_set("Asia/Bangkok");
+            echo date_default_timezone_get();
+            echo "<br>";
+            echo date("H:i:s", $res);
+            // echo date("H:i:s", $res);
+            // $dk = $this->db->table('tujuan_kapal')->getWhere(['tk_id' => $id])->getRow();
+
+            // // $data = $this->db->table('tujuan_kapal')->where(['tk_id' => $id])->getRow();
+
+            // $time = "00:00:10";
+            // return date('H', $time);
+            // return date('H', $dk->tk_jam);
+
+            // echo date('d F Y', strtotime($dk->tk_jam));
+            // echo strtotime($dk->tk_jam);
+            echo "<br>";
+            // echo date("H:i", $jam1);
+            // echo date("H:i:", strtotime($hasil));
+            // $this->db->table('tujuan_kapal')->where(['tk_id' => $id])->update($data);
+            // return redirect()->to(site_url('tujuanKapal'))->with('success', 'Data Berhasil Dirubah!');
+        }
+    }
+
+    public function tujuanKapalDel()
+    {
+        if (session()->get('user_level') <> "admin") {
+            return redirect()->to(site_url('home'));
+        } else {
+            $id = $this->request->getPost('tk_id');
+            $this->db->table('tujuan_kapal')->where(['tk_id' => $id])->delete();
+            return redirect()->to(site_url('tujuanKapal'))->with('success', 'Data Berhasil Dihapus!');
+        }
     }
 
     // Detail Kapal
@@ -21,6 +111,7 @@ class Kapal extends BaseController
         $model  = new TabelData();
         $data = [
             'kodeKapal' => $model->getKodeKapal(),
+            'tujuanKapal' => $model->getTujuanKapal(),
             'detailKapal' => $model->getDetailKapal()
         ];
         return view('bmo/detailKapal/index', $data);
@@ -48,10 +139,9 @@ class Kapal extends BaseController
                     'dk_kapten' => $this->request->getPost('dk_kapten'),
                     'dk_kapasitas' => $this->request->getPost('dk_kapasitas'),
                     'dk_mesin' => $this->request->getPost('dk_mesin'),
+                    'dk_tujuan' => $this->request->getPost('dk_tujuan'),
                     'dk_day' => $this->request->getPost('dk_day'),
                     'dk_end' => $this->request->getPost('dk_end'),
-                    'dk_perjam' => $this->request->getPost('dk_perjam'),
-                    'dk_diskon' => $this->request->getPost('dk_diskon'),
                     'dk_gambar' => $file_gambar->getName(),
                 ];
 
@@ -76,8 +166,7 @@ class Kapal extends BaseController
                     'dk_mesin' => $this->request->getPost('dk_mesin'),
                     'dk_day' => $this->request->getPost('dk_day'),
                     'dk_end' => $this->request->getPost('dk_end'),
-                    'dk_perjam' => $this->request->getPost('dk_perjam'),
-                    'dk_diskon' => $this->request->getPost('dk_diskon'),
+                    'dk_tujuan' => $this->request->getPost('dk_tujuan'),
                 ];
                 $this->db->table('detail_kapal')->where(['dk_id' => $id])->update($data);
                 return redirect()->to(site_url('detailKapal'))->with('success', 'Data Berhasil Dirubah!');
@@ -107,8 +196,7 @@ class Kapal extends BaseController
                         'dk_mesin' => $this->request->getPost('dk_mesin'),
                         'dk_day' => $this->request->getPost('dk_day'),
                         'dk_end' => $this->request->getPost('dk_end'),
-                        'dk_perjam' => $this->request->getPost('dk_perjam'),
-                        'dk_diskon' => $this->request->getPost('dk_diskon'),
+                        'dk_tujuan' => $this->request->getPost('dk_tujuan'),
                         'dk_gambar' => $file_gambar->getName(),
                     ];
                     $this->db->table('detail_kapal')->where(['dk_id' => $id])->update($data);
@@ -139,41 +227,50 @@ class Kapal extends BaseController
         $model  = new TabelData();
         $data = [
             'bookingKapal' => $model->getBookingKapal(),
-            'customer' => $model->getCustomer(),
-            'detailKapal' => $model->detailKapal()
+            'detailKapal' => $model->getDetailKapal()
         ];
         return view('bmo/bookingKapal/index', $data);
     }
 
     public function bookingKapalAdd()
     {
-        $nama_kapal = $this->request->getPost('nama_kapal');
-        $dk = $this->db->table('detail_kapal')->getWhere(['dk_id' => $nama_kapal])->getRow();
-        $date = date('l', strtotime($this->request->getPost('tgl_booking')));
+        $kode_kapal = $this->request->getPost('transaksi_kode_kapal');
+        $dk = $this->db->table('detail_kapal')->getWhere(['dk_id' => $kode_kapal])->getRow();
+        $date = date('l', strtotime($this->request->getPost('transaksi_tgl_booking')));
         if ($date == "Saturday" or $date == "Sunday") {
             $harga_booking = $dk->dk_end;
         } else {
             $harga_booking = $dk->dk_day;
         }
-        $transaksi = $this->db->table('transaksi_kapal')->getWhere(['nama_kapal' => $nama_kapal, 'tgl_selesai' => $this->request->getPost('tgl_booking')])->getRow();
+        $tujuan = $this->db->table('tujuan_kapal')->getWhere(['tk_kode' => $dk->dk_tujuan])->getRow();
+        $transaksi = $this->db->table('transaksi_kapal')->getWhere(['transaksi_kode_kapal' => $kode_kapal, 'transaksi_tgl_booking' => $this->request->getPost('transaksi_tgl_booking')])->getRow();
         if ($transaksi != null) {
-            return redirect()->back()->with('error', 'Maaf tanggal tersebut sudah terbooking, Silahkan cari tanggal yang lain!');
+            // return redirect()->back()->with('error', 'Maaf tanggal tersebut sudah terbooking, Silahkan cari tanggal yang lain!');
+            $time1 = strtotime($this->request->getPost('transaksi_tgl_booking') . " " . $transaksi->transaksi_jam_kembali);
+            $time2 = strtotime($this->request->getPost('transaksi_tgl_booking') . " " . $tujuan->tk_jam);
+            $diff = $time1 + $time2;
+            $jam = floor($diff / (60 * 60));
+            echo $this->request->getPost('transaksi_tgl_booking') . " " . $transaksi->transaksi_jam_kembali;
         } else {
             $data = [
-                'customer' => $this->request->getPost('customer'),
-                'nama' => $this->request->getPost('nama'),
-                'nama_kapal' => $this->request->getPost('nama_kapal'),
-                'tgl_booking' => $this->request->getPost('tgl_booking'),
-                'tgl_selesai' => "0000-00-00",
-                'harga_booking' => $harga_booking,
-                'harga_perjam' => $dk->dk_perjam,
-                'harga_bayar' => "0",
-                'kode_bank' => "0",
-                'status_kapal' => "Booked",
-                'status_pembayaran' => "Belum"
+                'transaksi_nama' => $this->request->getPost('transaksi_nama'),
+                'transaksi_email' => $this->request->getPost('transaksi_email'),
+                'transaksi_telp' => $this->request->getPost('transaksi_telp'),
+                'transaksi_tgl_booking' => $this->request->getPost('transaksi_tgl_booking'),
+                'transaksi_tgl_selesai' => "0000-00-00",
+                'transaksi_jam_booking' => "08:00:00",
+                'transaksi_jam_kembali' => "08:15:00",
+                'transaksi_kode_kapal' => $dk->dk_id,
+                'transaksi_harga' => $harga_booking,
+                'transaksi_tujuan' => $dk->dk_tujuan,
+                'transaksi_status_kapal' => "Booking",
+                'transaksi_status_pembayaran' => "Belum",
+                'transaksi_bayar' => "0",
+                'transaksi_nomor_bank' => "0",
             ];
-            $this->db->table('transaksi_kapal')->insert($data);
-            return redirect()->to(site_url('bookingKapal'))->with('success', 'Data Berhasil Disimpan!');
+            // $this->db->table('transaksi_kapal')->insert($data);
+            // return redirect()->to(site_url('bookingKapal'))->with('success', 'Data Berhasil Disimpan!');
+            echo "Simpan!";
         }
     }
 

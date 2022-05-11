@@ -44,8 +44,8 @@
             </a>
 
             <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
-                <li><a href="<?= site_url() ?>" class="nav-link px-2 link-light active">Home</a></li>
-                <li><a href="<?= site_url('booking') ?>" class="nav-link px-2 link-light">Booking</a></li>
+                <li><a href="<?= site_url() ?>" class="nav-link px-2 link-light">Home</a></li>
+                <li><a href="<?= site_url('booking') ?>" class="nav-link px-2 link-light active">Booking</a></li>
                 <li><a href="#" class="nav-link px-2 link-light">About</a></li>
                 <li><a href="#" class="nav-link px-2 link-light">Contact</a></li>
             </ul>
@@ -72,53 +72,8 @@
 
         <div class="album py-5 bg-light">
             <div class="container">
-
                 <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
 
-                    <?php foreach ($detailKapal as $key) : ?>
-                        <div class="col">
-                            <div class="card shadow-sm">
-                                <!-- <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false">
-                                <title>Placeholder</title>
-                                <rect width="100%" height="100%" fill="#55595c" /><text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text>
-                            </svg> -->
-                                <img src="<?= base_url('kapal/detail/' . $key['dk_gambar']) ?>" width="100%" height="225">
-                                <div class="card-body">
-                                    <h2 class="text-center"><?= $key['dk_nama'] ?></h2>
-                                    <table class="table table-striped table-md">
-                                        <tbody>
-                                            <tr>
-                                                <td>Kapasitas</td>
-                                                <td>:</td>
-                                                <td><?= $key['dk_kapasitas'] ?></td>
-                                            </tr>
-                                            <tr>
-                                                <td>Mesin</td>
-                                                <td>:</td>
-                                                <td class="text-right" style="font-size: 10pt;"><?= $key['dk_mesin'] ?></td>
-                                            </tr>
-                                            <tr>
-                                                <td>Weekday</td>
-                                                <td>:</td>
-                                                <td><?= "Rp. " . number_format($key['dk_day']) ?></td>
-                                            </tr>
-                                            <tr>
-                                                <td>Weekend</td>
-                                                <td>:</td>
-                                                <td><?= "Rp. " . number_format($key['dk_end']) ?></td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                    <div class="d-flex justify-content-between align-items-center">
-                                        <small class="text-muted"></small>
-                                        <div class="btn-group">
-                                            <button type="button" class="btn btn-sm btn-outline-success">Pesan</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    <?php endforeach; ?>
 
                 </div>
             </div>

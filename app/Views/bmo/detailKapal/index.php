@@ -12,7 +12,7 @@
         if (session()->get('user_level') == "admin") {
         ?>
             <div class="section-header-button">
-                <a href="" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">Tambah Detail Kapal</a>
+                <a href="" class="btn btn-success" data-toggle="modal" data-target="#exampleModal">Tambah Detail Kapal</a>
             </div>
         <?php
         } else {
@@ -88,21 +88,22 @@
 
                     <hr />
                     <div class="form-row">
-                        <div class="form-group col-lg-6">
+                        <div class="form-group col-lg-4">
                             <label for="dk_day" class="form-label">Harga Weekday</label>
                             <input type="number" name="dk_day" id="dk_day" class="form-control" autocomplete="off">
                         </div>
-                        <div class="form-group col-lg-6">
+                        <div class="form-group col-lg-4">
                             <label for="dk_end" class="form-label">Harga Weekend</label>
                             <input type="number" name="dk_end" id="dk_end" class="form-control" autocomplete="off">
                         </div>
-                        <div class="form-group col-lg-6">
-                            <label for="dk_perjam" class="form-label">Harga Perjam</label>
-                            <input type="number" name="dk_perjam" id="dk_perjam" class="form-control" autocomplete="off">
-                        </div>
-                        <div class="form-group col-lg-6">
-                            <label for="dk_diskon" class="form-label">Harga Diskon</label>
-                            <input type="number" name="dk_diskon" id="dk_diskon" class="form-control" autocomplete="off">
+                        <div class="form-group col-lg-4">
+                            <label for="dk_tujuan" class="form-label">Tujuan</label>
+                            <select name="dk_tujuan" id="dk_tujuan" class="form-control" required>
+                                <option value="" hidden>- PILIH -</option>
+                                <?php foreach ($tujuanKapal as $d) : ?>
+                                    <option value="<?= $d['tk_kode']; ?>"><?= $d['tk_tujuan']; ?></option>
+                                <?php endforeach; ?>
+                            </select>
                         </div>
                     </div>
 
@@ -147,8 +148,7 @@
                                     <th class="text-center">KAPASITAS</th>
                                     <th class="text-center">WEEKDAY</th>
                                     <th class="text-center">WEEKEND</th>
-                                    <th class="text-center">PERJAM</th>
-                                    <th class="text-center">DISKON</th>
+                                    <th class="text-center">TUJUAN</th>
                                     <th class="text-center">MESIN</th>
                                     <th class="text-center">GAMBAR</th>
                                     <?php
@@ -174,8 +174,7 @@
                                         <td class="text-center"><?= $key['dk_kapasitas'] ?></td>
                                         <td><?= "Rp. " . number_format($key['dk_day']) ?></td>
                                         <td><?= "Rp. " . number_format($key['dk_end']) ?></td>
-                                        <td><?= "Rp. " . number_format($key['dk_perjam']) ?></td>
-                                        <td><?= "Rp. " . number_format($key['dk_diskon']) ?></td>
+                                        <td><?= $key['tk_tujuan'] ?></td>
                                         <td><?= $key['dk_mesin'] ?></td>
                                         <td class="text-center"><img src="<?= base_url('kapal/detail/' . $key['dk_gambar']) ?>" style="width:100px;height:100px;"></td>
                                         <?php
@@ -244,21 +243,24 @@
 
                                                                 <hr />
                                                                 <div class="form-row">
-                                                                    <div class="form-group col-lg-6" style="width:100%">
+                                                                    <div class="form-group col-lg-4" style="width:100%">
                                                                         <label>Harga Weekday</label>
                                                                         <input type="number" name="dk_day" required="required" class="form-control" value="<?= $key['dk_day'] ?>" style="width:100%">
                                                                     </div>
-                                                                    <div class="form-group col-lg-6" style="width:100%">
+                                                                    <div class="form-group col-lg-4" style="width:100%">
                                                                         <label>Harga Weekend</label>
                                                                         <input type="number" name="dk_end" required="required" class="form-control" value="<?= $key['dk_end'] ?>" style="width:100%">
                                                                     </div>
-                                                                    <div class="form-group col-lg-6" style="width:100%">
-                                                                        <label>Harga Perjam</label>
-                                                                        <input type="number" name="dk_perjam" required="required" class="form-control" value="<?= $key['dk_perjam'] ?>" style="width:100%">
-                                                                    </div>
-                                                                    <div class="form-group col-lg-6" style="width:100%">
-                                                                        <label>Harga Diskon</label>
-                                                                        <input type="number" name="dk_diskon" required="required" class="form-control" value="<?= $key['dk_diskon'] ?>" style="width:100%">
+                                                                    <div class="form-group col-lg-4" style="width:100%">
+                                                                        <label>Tujuan</label>
+                                                                        <select name="dk_tujuan" class="form-control" required="required" style="width:100%">
+                                                                            <option value="">- Pilih -</option>
+                                                                            <?php foreach ($tujuanKapal as $k) : ?>
+                                                                                <option <?php if ($key['dk_tujuan'] == $k['tk_kode']) {
+                                                                                            echo "selected='selected'";
+                                                                                        } ?> value="<?= $k['tk_kode'] ?>"><?= $k['tk_tujuan']; ?></option>
+                                                                            <?php endforeach; ?>
+                                                                        </select>
                                                                     </div>
                                                                 </div>
 

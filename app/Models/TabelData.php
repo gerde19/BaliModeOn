@@ -17,7 +17,32 @@ class TabelData extends Model
     {
         return $this->db->table('detail_kapal')
             ->join('kode_kapal', 'kode_kapal.kk_id=detail_kapal.dk_kode')
+            ->join('tujuan_kapal', 'tujuan_kapal.tk_kode=detail_kapal.dk_tujuan')
             ->get()->getResultArray();
+    }
+
+    public function getTujuanKapal()
+    {
+        return $this->db->table('tujuan_kapal')
+            ->orderBy("tk_kode ASC")
+            ->get()->getResultArray();
+    }
+
+    public function kodeTujuanKapal()
+    {
+        $query = $this->db->query("SELECT MAX(tk_kode) as tk_kode from tujuan_kapal");
+        $hasil = $query->getRow();
+        return $hasil->tk_kode;
+    }
+
+    public function detailKapalRow() // Menghitung jumlah total data pada tabel
+    {
+        $detailKapal = $this->db->table('detail_kapal');
+        if ($detailKapal->countAll() > 0) {
+            return $detailKapal->countAll();
+        } else {
+            return 0;
+        }
     }
 
     public function getAnggota()
@@ -36,15 +61,9 @@ class TabelData extends Model
     public function getBookingKapal()
     {
         return $this->db->table('transaksi_kapal')
-            ->join('detail_kapal', 'detail_kapal.dk_id=transaksi_kapal.nama_kapal')
-            ->join('customer', 'customer.cus_id=transaksi_kapal.customer')
-            ->where("status_kapal!='Kembali'")
-            ->get()->getResultArray();
-    }
-
-    public function detailKapal() //Mengambil data di Tabel detail_kapal berdasarkan kriteria Ready
-    {
-        return $this->db->table('detail_kapal')
+            ->join('detail_kapal', 'detail_kapal.dk_id=transaksi_kapal.transaksi_kode_kapal')
+            ->join('tujuan_kapal', 'tujuan_kapal.tk_kode=transaksi_kapal.transaksi_tujuan')
+            ->where("transaksi_status_kapal!='Kembali'")
             ->get()->getResultArray();
     }
     // Booking Akhir

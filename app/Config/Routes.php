@@ -40,11 +40,13 @@ $routes->get('create-db', function () {
 // route since we don't have to scan directories.
 $routes->get('/', 'User::index');
 $routes->get('user', 'User::index');
+$routes->get('booking', 'User::booking');
 $routes->get('login', 'Auth::login');
 $routes->post('loginProcess', 'Auth::loginProcess');
-$routes->get('kodeKapal', 'Kode::kodeKapal');
+$routes->get('home', 'Home::index');
 
 // DATA
+$routes->get('kodeKapal', 'Kode::kodeKapal');
 $routes->get('anggota', 'Anggota::anggota');
 $routes->post('anggotaDel', 'Anggota::anggotaDel');
 $routes->get('customer', 'Customer::customer');
@@ -52,6 +54,8 @@ $routes->post('customerDel', 'Customer::customerDel');
 
 // KAPAL
 $routes->get('detailKapal', 'Kapal::detailKapal');
+$routes->get('tujuanKapal', 'Kapal::tujuanKapal');
+$routes->post('tujuanKapalDel', 'Kapal::tujuanKapalDel');
 $routes->post('detailKapalDel', 'Kapal::detailKapalDel');
 $routes->get('bookingKapal', 'Kapal::bookingKapal');
 $routes->post('bookingKapalDel', 'Kapal::bookingKapalDel');

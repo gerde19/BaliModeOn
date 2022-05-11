@@ -9,7 +9,7 @@
     <div class="section-header">
         <h1>Customer</h1>
         <div class="section-header-button">
-            <a href="" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">Tambah Customer</a>
+            <a href="" class="btn btn-color" data-toggle="modal" data-target="#exampleModal">Tambah Customer</a>
         </div>
     </div>
 
